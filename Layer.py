@@ -62,8 +62,12 @@ class Layer:
         if not weights or num_nodes != len(weights):
             print("Weight list is not commensurable with number of nodes.")
             print("Weights will be initialized with random values.")
-            weights= random.sample(len(self.next_layer.nodes))
+            weights = [random.random() for x in range(num_nodes)]
         node.set_weights(weights)
+
+    def __iter__(self):
+        for n in self.nodes:
+            yield(n)
 
     """
         num_nodes=self.get_num_nodes()

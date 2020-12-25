@@ -37,7 +37,9 @@ class Network:
     def __init__(self,in_layer,out_layer):
         self.input_layer = in_layer
         self.output_layer = out_layer
-        self._hidden_layers = []
+        self.input_layer.next_layer = self.output_layer
+        self.output_layer.prev_layer = self.input_layer
+        self.layers = [in_layer,out_layer]
 
     def initialize_weights(self):
         layer = self.input_layer
@@ -93,7 +95,7 @@ class Network:
         success = self.input_layer.attach_next_layer(layer)
         layer.attach_next_layer(old_layer)
         old_layer.attach_prev_layer(layer)
-        self._index_layers()
+        #self.hidden_layers()
 
     def _index_layers(self):
         index_complete = False
