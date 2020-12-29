@@ -1,4 +1,5 @@
 import random
+from Node import Node
 
 class Layer:
     '''
@@ -24,10 +25,11 @@ class Layer:
         self.is_output_layer= is_out
         self.prev_layer= prev
         self.next_layer= next
-        self.nodes= nodes
+        self.nodes = nodes if len(nodes) > 0 else []
 
     def add_node(self, node):
         self.nodes.append(node)
+        #print(self.nodes)
 
     def get_num_nodes(self):
         return(len(self.nodes))
@@ -68,6 +70,17 @@ class Layer:
     def __iter__(self):
         for n in self.nodes:
             yield(n)
+
+    def __str__(self):
+        if self.is_input_layer:
+            print('Input Layer')
+        elif self.is_output_layer:
+            print("Output Layer")
+        else:
+            print("Hidden Layer")
+        node_id = 0
+        retval = [str(n) for n in self.nodes]
+        return(retval.__str__())
 
     """
         num_nodes=self.get_num_nodes()

@@ -34,6 +34,7 @@ class Node:
         self.value = value
         self.expected_value = expected_value
         self.error = 0
+        self.weights = 0
 
     def calculate_value(self):
         if len(input_nodes.keys()) > 0:
@@ -63,5 +64,8 @@ class Node:
 
     def adjust_weight(self,node,i):
         error = node.value - node.expected_value
-        w = self.weight * error
+        w = self.weights[i] * error
         self.set_weight(i,w)
+
+    def __str__(self):
+        return(str(self.value) + " " + str(self.weights))

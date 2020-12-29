@@ -46,6 +46,7 @@ class Network:
         while True:
             for node in layer:
                 layer.set_node_weights(node)
+
             layer = layer.next_layer
             if layer.is_output_layer:
                 break
@@ -54,6 +55,7 @@ class Network:
         layer = self.input_layer
         while True:
             i = 0
+            #print(layer)
             for next_node in layer.next_layer:
                 for node in layer.nodes:
                     next_node.value += node.value * node.weights[i]
@@ -63,16 +65,22 @@ class Network:
                 break
 
     def back_prop(self):
+        #print(self)
         layer = self.output_layer
         while True:
-            i = 0
+
+            #$print(layer)
+            #print(layer.prev_layer)
             for prev_node in layer.prev_layer:
+                i =0
                 for node in layer:
                     prev_node.adjust_weight(node,i)
+                i+=1
             if layer.is_input_layer:
                 break
             else:
                 layer = layer.prev_layer
+                #print(layer)
 
     def append_hidden_layer(self,layer):
         """
@@ -91,22 +99,31 @@ class Network:
         currently attached to the input layer, if one exists.
         '''
         old_layer = self.input_layer.next_layer
+        #print(old_layer)
         self.input_layer.detach_next_layer()
-        success = self.input_layer.attach_next_layer(layer)
+        self.input_layer.attach_next_layer(layer)
         layer.attach_next_layer(old_layer)
         old_layer.attach_prev_layer(layer)
-        #self.hidden_layers()
+        layer.attach_prev_layer(self.input_layer)
+        #print(layer)
+        #print(layer.prev_layer)
+        self._index_layers()
 
     def _index_layers(self):
         index_complete = False
         i = 0
-        layer = self.input_layer.next_layer
-        self._hidden_layers = []
+        layer = self.input_layer
+        self.layers = []
         while not index_complete:
-            _hidden_layers.append(layer)
+            index_complete = layer.is_output_layer
+            self.layers.append(layer)
             layer = layer.next_layer
-            if layer.is_output_layer:
-                index_complete = True
+
+
+    def __str__(self):
+        for layer in self.layers:
+            print(layer)
+        return('')
 
 
 
