@@ -66,6 +66,7 @@ class Node:
         error = node.value - node.expected_value
         w = self.weights[i] * error
         self.set_weight(i,w)
+        self.set_expected_value()
 
     def __str__(self):
         return(str(self.value) + " " + str(self.weights))
